@@ -24,9 +24,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp \
-    cursor.cpp
+    cursor.cpp \
+    unit.cpp
 
 HEADERS  += \
-    cursor.h
+    cursor.h \
+    unit.h
 
 FORMS    +=
+
+RESOURCES += \
+    pic10c-final.qrc
