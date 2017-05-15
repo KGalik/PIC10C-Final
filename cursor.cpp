@@ -7,7 +7,7 @@ cursor::cursor(int set_x, int set_y)
 	setPixmap(sheet.copy(0,0,20,20));
 	QTimer* timer = new QTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
-	timer->start(250);
+	timer->start(500);
 }
 
 void cursor::keyPressEvent(QKeyEvent* event)
@@ -41,7 +41,6 @@ void cursor::keyPressEvent(QKeyEvent* event)
 void cursor::update_cursor()
 {
 	setPos(cursor_x*grid_size,cursor_y*grid_size);
-	qDebug() << "Updated";
 }
 
 void cursor::animate()
