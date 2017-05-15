@@ -1,9 +1,10 @@
 #include "cursor.h"
 
 #include <QDebug>
-cursor::cursor(int set_x, int set_y)
+cursor::cursor(int set_x, int set_y): cursor_x(set_x), cursor_y(set_y)
 {
 	sheet = QPixmap(":/images/sprites/player_cursor.png");
+	update_cursor();
 	setPixmap(sheet.copy(0,0,20,20));
 	QTimer* timer = new QTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));

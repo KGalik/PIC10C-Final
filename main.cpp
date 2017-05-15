@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 	QGraphicsScene* scene = new QGraphicsScene();
 
-	cursor* player_cursor = new cursor(0,0);
+	cursor* player_cursor = new cursor(7,4);
 	scene->addItem(player_cursor);
 	player_cursor->setFlag(QGraphicsItem::ItemIsFocusable);
 	player_cursor->setFocus();
