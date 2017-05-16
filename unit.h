@@ -5,11 +5,11 @@
 #include <QGraphicsPixmapItem>
 #include <QTimer>
 
-class unit : public QWidget, public QGraphicsPixmapItem
+template <typename type_policy, typename team_policy>
+class unit: public QGraphicsPixmapItem
 {
-	Q_OBJECT
 public:
-	unit(int,int,int,int,int,int,int,int,int);
+	unit<type_policy, team_policy>(int,int,int,int,int,int,int,int,int);
 	//accessors
 	int get_hp();
 	int get_sta();
@@ -32,8 +32,8 @@ private:
 	int	def; // damage reduce when attacked
 	int	move; // movement range of unit
 
-	int	type; // 0 for axe, 1 for sword, 2 for lance
-	int	team; // 0 for AI, 1 for player
+	type_policy	type; // 0 for axe, 1 for sword, 2 for lance
+	team_policy	team; // 0 for AI, 1 for player
 
 	// unit location
 	int unit_x;
@@ -41,10 +41,25 @@ private:
 
 	int frame = 0;
 	QPixmap sheet;
+};
+
+class type_policy_axe{
+public:
+
+private:
+
+};
+
+class team_policy_player: public QObject{
+	Q_OBJECT
+public:
+
+private:
+
 signals:
 
 public slots:
-	void animate();
+	//void animate();
 };
 
 #endif // UNIT_H

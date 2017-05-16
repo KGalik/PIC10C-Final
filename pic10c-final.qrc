@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/images">
         <file>sprites/player_cursor.png</file>
-        <file>sprites/unit_red_sword.png</file>
+        <file>sprites/unit_sword.png</file>
     </qresource>
     <qresource prefix="/audio"/>
 </RCC>
