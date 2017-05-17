@@ -1,11 +1,11 @@
 #include "unit.h"
 
 
-unit::unit(int x, int y, int set_hp, int set_sta, int set_att, int set_def, int set_move, int set_type, int set_team)
+unit::unit(int x, int y, std::string set_type, int set_team, int set_hp, int set_sta, int set_att, int set_def, int set_move)
 		:unit_x(x), unit_y(y),
 		hp(set_hp), sta(set_sta), att(set_att), def(set_def), move(set_move),
 		type(set_type), team(set_team){
-	sheet = QPixmap(":/images/sprites/unit_red_sword.png");
+	sheet = QPixmap(QString::fromStdString(std::string(":/images/sprites/unit_") + type + std::string(".png")));
 	setPixmap(sheet.copy(0, 0, 16,16));
 	QTimer* timer = new QTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -37,7 +37,7 @@ int unit::get_move()
 	return move;
 }
 
-int unit::get_type()
+std::string unit::get_type()
 {
 	return type;
 }
@@ -76,5 +76,9 @@ void unit::exhaust_stamina(int exh)
 
 void unit::animate()
 {
-
+	++frame;
+	if (frame > 1){
+		frame = 0;
+	}
+	setPixmap(sheet.copy((frame+(2*cycle))*20, 0, 20, 20));
 }
