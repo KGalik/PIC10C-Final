@@ -6,7 +6,8 @@ unit::unit(int x, int y, std::string set_type, int set_team, int set_hp, int set
 		hp(set_hp), sta(set_sta), att(set_att), def(set_def), move(set_move),
 		type(set_type), team(set_team){
 	sheet = QPixmap(QString::fromStdString(std::string(":/images/sprites/unit_") + type + std::string(".png")));
-	setPixmap(sheet.copy(0, 0, 16,16));
+	setPos(unit_x,unit_y);
+	setPixmap(sheet.copy(0, 0, grid_size,grid_size));
 	QTimer* timer = new QTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
 	timer->start(500);
@@ -80,5 +81,5 @@ void unit::animate()
 	if (frame > 1){
 		frame = 0;
 	}
-	setPixmap(sheet.copy((frame+(2*cycle))*20, 0, 20, 20));
+	setPixmap(sheet.copy((frame+(2*team))*16, 0, 16, 16));
 }

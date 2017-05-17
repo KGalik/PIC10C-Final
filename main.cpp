@@ -4,7 +4,8 @@
 #include <QGraphicsView>
 #include "cursor.h"
 
-int grid_size = 16;
+int scaling = 2;
+int grid_size = 16*scaling;
 int grid_height = 9;
 int grid_width = 16;
 
@@ -23,8 +24,8 @@ int main(int argc, char *argv[])
 
 	view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	view->setFixedSize(256,144);
-	scene->setSceneRect(0,0,256,144);
+	view->setFixedSize(grid_width*grid_size,grid_height*grid_size);
+	scene->setSceneRect(0,0,grid_width*grid_size,grid_height*grid_size);
 
     return a.exec();
 }
