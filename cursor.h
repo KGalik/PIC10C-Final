@@ -9,6 +9,7 @@
 extern int grid_size;
 extern int grid_height;
 extern int grid_width;
+extern int scaling;
 
 class cursor : public QObject, public QGraphicsPixmapItem
 {
@@ -16,7 +17,6 @@ class cursor : public QObject, public QGraphicsPixmapItem
 public:
 	cursor(int,int);
 	void keyPressEvent(QKeyEvent* key);
-	void update_cursor();
 private:
 	int cursor_x = 0;
 	int cursor_y = 0;

@@ -6,6 +6,11 @@
 #include <QTimer>
 #include <string>
 
+extern int grid_size;
+extern int grid_height;
+extern int grid_width;
+extern int scaling;
+
 class unit : public QWidget, public QGraphicsPixmapItem
 {
 	Q_OBJECT
@@ -41,7 +46,6 @@ private:
 	int unit_y;
 
 	int frame = 0;
-	int cycle = 0;
 	QPixmap sheet;
 signals:
 
