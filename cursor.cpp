@@ -1,7 +1,6 @@
 #include "cursor.h"
 #include "game.h"
 
-#include <QDebug>
 cursor::cursor(int set_x, int set_y, game* new_game): cursor_x(set_x), cursor_y(set_y), the_game(new_game)
 {
 	QPixmap image(":/images/sprites/player_cursor.png");

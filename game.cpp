@@ -1,6 +1,5 @@
 #include "game.h"
 
-#include <QDebug>
 game::game(int w, int h, QGraphicsScene* new_scene): width(w), height(h), scene(new_scene){
 	unit_list[w*h];
 	for (int i=0; i<w*h; i++){
@@ -60,7 +59,6 @@ void game::update_paths(int index, int movement, int unit_team)
 
 void game::select(int index)
 {
-	qDebug() << "received";
 	if (!show_paths){
 		if (unit_list[index]){
 			connect(this, SIGNAL(selected(int)), unit_list[index].get(), SLOT(activated()));
