@@ -11,19 +11,24 @@ extern int grid_height;
 extern int grid_width;
 extern int scaling;
 
+class game;
+
 class cursor : public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 public:
-	cursor(int,int);
+	cursor(int,int, game*);
 	void keyPressEvent(QKeyEvent* key);
+	int cursor_index();
 private:
 	int cursor_x = 0;
 	int cursor_y = 0;
 	int frame = 0;
 	QPixmap sheet;
+	game* the_game;
 signals:
-
+	void zPressed(int);
+	void xPressed(int);
 public slots:
 	void animate();
 };

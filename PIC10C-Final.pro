@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     cursor.cpp \
-    unit.cpp
+    unit.cpp \
+    game.cpp
 
 HEADERS  += \
     cursor.h \
-    unit.h
+    unit.h \
+    game.h
 
 FORMS    +=
 

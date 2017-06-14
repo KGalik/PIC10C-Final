@@ -16,6 +16,7 @@ class unit : public QWidget, public QGraphicsPixmapItem
 	Q_OBJECT
 public:
 	unit(int,int,std::string,int,int,int,int,int,int);
+	unit(const unit&);
 	//accessors
 	int get_hp();
 	int get_sta();
@@ -26,6 +27,7 @@ public:
 	int get_team();
 	int get_x();
 	int get_y();
+	int index();
 	//mutators
 	void receive_damage(int);
 	void exhaust_stamina(int);
@@ -45,12 +47,15 @@ private:
 	int unit_x;
 	int unit_y;
 
+	bool active;
+
 	int frame = 0;
 	QPixmap sheet;
 signals:
 
 public slots:
 	void animate();
+	void activated();
 };
 
 #endif // UNIT_H

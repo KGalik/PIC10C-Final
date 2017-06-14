@@ -14,6 +14,8 @@ unit::unit(int x, int y, std::string set_type, int set_team, int set_hp, int set
 	timer->start(500);
 }
 
+unit::unit(const unit& rhs): hp(rhs.hp),sta(rhs.sta), att(rhs.att), def(rhs.def), move(rhs.move), type(rhs.type), team(rhs.team), unit_x(rhs.unit_x), unit_y(rhs.unit_y), frame(rhs.frame), sheet(rhs.sheet){}
+
 int unit::get_hp()
 {
 	return hp;
@@ -59,6 +61,11 @@ int unit::get_y()
 	return unit_y;
 }
 
+int unit::index()
+{
+	return unit_x+(unit_y*grid_width);
+}
+
 void unit::receive_damage(int dmg)
 {
 	hp-=dmg;
@@ -83,4 +90,9 @@ void unit::animate()
 		frame = 0;
 	}
 	setPixmap(sheet.copy((frame+(4*team))*16*scaling, 0, 16*scaling, 16*scaling));
+}
+
+void unit::activated()
+{
+
 }
