@@ -66,6 +66,11 @@ int unit::index()
 	return unit_x+(unit_y*grid_width);
 }
 
+bool unit::get_status()
+{
+	return active;
+}
+
 void unit::receive_damage(int dmg)
 {
 	hp-=dmg;
@@ -82,6 +87,23 @@ void unit::exhaust_stamina(int exh)
 	}
 }
 
+void unit::set_index(int index)
+{
+	unit_x = index%grid_width;
+	unit_y = index/grid_width;
+	setPos(unit_x*grid_size,unit_y*grid_size);
+}
+
+void unit::set_inactive()
+{
+	active = false;
+}
+
+void unit::set_cycle(int new_cycle)
+{
+	cycle = new_cycle;
+}
+
 
 void unit::animate()
 {
@@ -89,7 +111,7 @@ void unit::animate()
 	if (frame > 1){
 		frame = 0;
 	}
-	setPixmap(sheet.copy((frame+(4*team))*16*scaling, 0, 16*scaling, 16*scaling));
+	setPixmap(sheet.copy((frame+(4*team)+(2*cycle))*16*scaling, 0, 16*scaling, 16*scaling));
 }
 
 void unit::activated()

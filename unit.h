@@ -28,11 +28,13 @@ public:
 	int get_x();
 	int get_y();
 	int index();
+	bool get_status();
 	//mutators
 	void receive_damage(int);
 	void exhaust_stamina(int);
-	void set_x(int);
-	void set_y(int);
+	void set_index(int);
+	void set_inactive();
+	void set_cycle(int);
 private:
 	int hp; // hitpoints or health of unit
 	int	sta; // stamina of unit
@@ -47,9 +49,10 @@ private:
 	int unit_x;
 	int unit_y;
 
-	bool active;
+	bool active = true;
 
 	int frame = 0;
+	int cycle = 0;
 	QPixmap sheet;
 signals:
 

@@ -12,7 +12,7 @@ cursor::cursor(int set_x, int set_y, game* new_game): cursor_x(set_x), cursor_y(
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
 	timer->start(500);
 	connect(this, SIGNAL(zPressed(int)), the_game, SLOT(select(int)));
-	connect(this, SIGNAL(xPressed(int)), the_game, SLOT(back(int)));
+	connect(this, SIGNAL(xPressed()), the_game, SLOT(back()));
 }
 
 void cursor::keyPressEvent(QKeyEvent* event)
@@ -45,7 +45,7 @@ void cursor::keyPressEvent(QKeyEvent* event)
 		emit zPressed(cursor_index());
 	}
 	else if (event->key() == Qt::Key_X){
-		emit xPressed(cursor_index());
+		emit xPressed();
 	}
 }
 

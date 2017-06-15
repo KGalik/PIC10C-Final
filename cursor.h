@@ -28,7 +28,7 @@ private:
 	game* the_game;
 signals:
 	void zPressed(int);
-	void xPressed(int);
+	void xPressed();
 public slots:
 	void animate();
 };
