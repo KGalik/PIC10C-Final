@@ -24,7 +24,10 @@ public:
 	void keyPressEvent(QKeyEvent* key);
 	void update_paths(int, int, int);
 	void update_targets(int, int);
+	void AI_targets(int, int, int);
 	void clear_pathing();
+	void check_turn();
+	void AI_turn();
 private:
 	int width, height;
 	std::unique_ptr<unit> unit_list[144];
@@ -35,11 +38,13 @@ private:
 	int selected_index = 0;
 	bool show_targets = 0;
 	int move_index = 0;
+	bool player1_turn = 1;
 signals:
 	void selected(int);
 public slots:
 	void select(int);
 	void back();
+	void destroy_unit(int);
 };
 
 #endif // GAME_H

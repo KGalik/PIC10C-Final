@@ -1,6 +1,5 @@
 #include "unit.h"
 
-
 unit::unit(int x, int y, std::string set_type, int set_team, int set_hp, int set_sta, int set_att, int set_def, int set_move)
 		:unit_x(x), unit_y(y),
 		hp(set_hp), sta(set_sta), att(set_att), def(set_def), move(set_move),
@@ -41,9 +40,16 @@ int unit::get_move()
 	return move;
 }
 
-std::string unit::get_type()
+int unit::get_type()
 {
-	return type;
+	if(type == "axe")
+		return 0;
+	else if(type == "sword")
+		return 1;
+	else if(type == "lance")
+		return 2;
+	else
+		return 0; //default to axe
 }
 
 int unit::get_team()
@@ -71,22 +77,6 @@ bool unit::get_status()
 	return active;
 }
 
-void unit::receive_damage(int dmg)
-{
-	hp-=dmg;
-	if(hp<=0){
-		hp=0;
-	}
-}
-
-void unit::exhaust_stamina(int exh)
-{
-	sta-=exh;
-	if(sta<=0){
-		sta=0;
-	}
-}
-
 void unit::set_index(int index)
 {
 	unit_x = index%grid_width;
@@ -94,14 +84,16 @@ void unit::set_index(int index)
 	setPos(unit_x*grid_size,unit_y*grid_size);
 }
 
-void unit::set_inactive()
+void unit::set_status(int status) // 1 or 0
 {
-	active = false;
+	active = status;
+	set_cycle(1-status); //swaps 1 and 0 values
 }
 
 void unit::set_cycle(int new_cycle)
 {
 	cycle = new_cycle;
+	setPixmap(sheet.copy((frame+(4*team)+(2*cycle))*16*scaling, 0, 16*scaling, 16*scaling));
 }
 
 
@@ -112,9 +104,4 @@ void unit::animate()
 		frame = 0;
 	}
 	setPixmap(sheet.copy((frame+(4*team)+(2*cycle))*16*scaling, 0, 16*scaling, 16*scaling));
-}
-
-void unit::activated()
-{
-
 }

@@ -6,7 +6,7 @@
 #include "unit.h"
 #include "game.h"
 
-int scaling = 4;
+int scaling = 2;
 int grid_size = 16*scaling;
 int grid_height = 9;
 int grid_width = 16;
@@ -22,12 +22,12 @@ int main(int argc, char *argv[])
 	player_cursor->setFlag(QGraphicsItem::ItemIsFocusable);
 	player_cursor->setFocus();
 
-	current_game->add_unit(new unit(7,3,"axe",0,1,1,1,1,4));
-	current_game->add_unit(new unit(8,3,"axe",1,1,1,1,1,4));
-	current_game->add_unit(new unit(7,4,"sword",0,1,1,1,1,4));
-	current_game->add_unit(new unit(8,4,"sword",1,1,1,1,1,4));
-	current_game->add_unit(new unit(7,5,"lance",0,1,1,1,1,4));
-	current_game->add_unit(new unit(8,5,"lance",1,1,1,1,1,4));
+	current_game->add_unit(new unit(6,3,"axe",0,10,100,10,10,4));
+	current_game->add_unit(new unit(9,3,"axe",1,10,100,10,10,4));
+	current_game->add_unit(new unit(6,4,"sword",0,10,100,10,10,4));
+	current_game->add_unit(new unit(9,4,"sword",1,10,100,10,10,4));
+	current_game->add_unit(new unit(6,5,"lance",0,10,100,10,10,4));
+	current_game->add_unit(new unit(9,5,"lance",1,10,100,10,10,4));
 
 	QGraphicsView* view = new QGraphicsView(scene);
 	view->show();

@@ -23,17 +23,15 @@ public:
 	int get_att();
 	int get_def();
 	int get_move();
-	std::string get_type();
+	int get_type();
 	int get_team();
 	int get_x();
 	int get_y();
 	int index();
 	bool get_status();
 	//mutators
-	void receive_damage(int);
-	void exhaust_stamina(int);
 	void set_index(int);
-	void set_inactive();
+	void set_status(int);
 	void set_cycle(int);
 private:
 	int hp; // hitpoints or health of unit
@@ -55,10 +53,9 @@ private:
 	int cycle = 0;
 	QPixmap sheet;
 signals:
-
+	void killed(int);
 public slots:
 	void animate();
-	void activated();
 };
 
 #endif // UNIT_H
