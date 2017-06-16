@@ -39,11 +39,11 @@ void game::update_paths(int index, int movement, int unit_team)
 					if (pathing[i+grid_width]==0)
 						pathing[i+grid_width] = j-1;
 				}
-				if (i-1>=0){
+				if (i-1>=0 && i%grid_width != 0){
 					if (pathing[i-1]==0)
 						pathing[i-1] = j-1;
 				}
-				if (i+1<=grid_width*grid_height){
+				if (i+1<=grid_width*grid_height && i%grid_width != 15){
 					if (pathing[i+1]==0)
 						pathing[i+1] = j-1;
 				}
@@ -143,7 +143,7 @@ void game::AI_targets(int index, int movement, int unit_type)
 							pathing[i+grid_width] = -3;
 					}
 				}
-				if (i-1>=0){
+				if (i-1>=0 && i%grid_width != 0){
 					if (pathing[i-1]==0)
 						pathing[i-1] = j-1;
 					else if (pathing[i-1]== -1 && !unit_list[i]){ // check adjacent space and if current space is open
@@ -153,7 +153,7 @@ void game::AI_targets(int index, int movement, int unit_type)
 							pathing[i-1] = -3;
 					}
 				}
-				if (i+1<=grid_width*grid_height){
+				if (i+1<=grid_width*grid_height && i%grid_width != 15){
 					if (pathing[i+1]==0)
 						pathing[i+1] = j-1;
 					else if (pathing[i+1]== -1 && !unit_list[i]){ // check adjacent space and if current space is open
