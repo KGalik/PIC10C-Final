@@ -1,5 +1,6 @@
 #include "game.h"
 
+//constructor
 game::game(int w, int h, QGraphicsScene* new_scene): width(w), height(h), scene(new_scene){
 	unit_list[w*h];
 	for (int i=0; i<w*h; i++){
@@ -7,6 +8,7 @@ game::game(int w, int h, QGraphicsScene* new_scene): width(w), height(h), scene(
 	}
 }
 
+//adds unit to scene and correct index
 void game::add_unit(unit* new_unit)
 {
 	if(!unit_list[new_unit->index()]){
@@ -16,20 +18,21 @@ void game::add_unit(unit* new_unit)
 	}
 }
 
+//shows available move locations
 void game::update_paths(int index, int movement, int unit_team)
 {
-	for (int i = 0; i < grid_width*grid_height; ++i){
+	for (int i = 0; i < grid_width*grid_height; ++i){//resets array
 		pathing[i] = 0;
 	}
-	for (int i = 0; i < grid_width*grid_height; ++i){
+	for (int i = 0; i < grid_width*grid_height; ++i){//finds enemy units
 		if(unit_list[i]){
 			if (unit_list[i]->get_team() == 1-unit_team)
 				pathing[i] = -1;
 		}
 	}
-	pathing[index] = movement+1;
+	pathing[index] = movement+1;//movement "root"
 	for (int j = movement+1; j > 1; --j){
-		for (int i = 0; i < grid_width*grid_height; ++i){
+		for (int i = 0; i < grid_width*grid_height; ++i){//spreads to empty neighbors while subtracting 1 from value
 			if (pathing[i] == j){
 				if (i-grid_width>=0){
 					if (pathing[i-grid_width]==0)
@@ -50,13 +53,14 @@ void game::update_paths(int index, int movement, int unit_team)
 			}
 		}
 	}
-	for (int i = 0; i < grid_width*grid_height; ++i){
+	for (int i = 0; i < grid_width*grid_height; ++i){//removes movement from teammates, 1 unit per space
 		if(unit_list[i]){
 			if (unit_list[i]->get_team() == unit_team)
 				pathing[i] = 0;
 		}
 	}
-	pathing[index] = movement+1;
+	pathing[index] = movement+1;//reincludes itself as a valid stopping point
+	//visual effects
 	for (int i = 0; i < grid_width*grid_height; ++i){
 		if (pathing[i] > 0)
 			tiles.push_back(new QGraphicsRectItem((i%grid_width)*grid_size,(i/grid_width)*grid_size,grid_size,grid_size));
@@ -65,12 +69,13 @@ void game::update_paths(int index, int movement, int unit_team)
 		scene->addItem(tiles[i]);
 }
 
+//checks for adjacent enemies after movement
 void game::update_targets(int index, int unit_team)
 {
-	for (int i = 0; i < grid_width*grid_height; ++i){
+	for (int i = 0; i < grid_width*grid_height; ++i){//resets array
 		pathing[i] = 0;
 	}
-	pathing[index] = 2;
+	pathing[index] = 2;//mimics previous algorithm
 	tiles.push_back(new QGraphicsRectItem((index%grid_width)*grid_size,(index/grid_width)*grid_size,grid_size,grid_size));
 	if (index-grid_width>=0){
 		if (unit_list[index-grid_width]){
@@ -88,7 +93,7 @@ void game::update_targets(int index, int unit_team)
 			}
 		}
 	}
-	if (index-1>=0){
+	if (index-1>=0 && index%grid_width != 0){
 		if (unit_list[index-1]){
 			if (unit_list[index-1]->get_team() == 1-unit_team){
 				pathing[index-1] = 1;
@@ -96,7 +101,7 @@ void game::update_targets(int index, int unit_team)
 			}
 		}
 	}
-	if (index+1<=grid_width*grid_height){
+	if (index+1<=grid_width*grid_height && index%grid_width != 15){
 		if (unit_list[index+1]){
 			if (unit_list[index+1]->get_team() == 1-unit_team){
 				pathing[index+1] = 1;
@@ -104,10 +109,13 @@ void game::update_targets(int index, int unit_team)
 			}
 		}
 	}
+	//visual
 	for (int i = 0; i < tiles.size(); ++i)
 		scene->addItem(tiles[i]);
 }
 
+//determines best targets for an AI unit, does not move if no advantage or stalemate is found
+//this function only updates the pathing array
 void game::AI_targets(int index, int movement, int unit_type)
 {
 	for (int i = 0; i < grid_width*grid_height; ++i){
@@ -184,6 +192,7 @@ void game::clear_pathing()
 	}
 }
 
+//calls the AI to move when the player's turn is over
 void game::check_turn()
 {
 	for (int i = 0; i < grid_width*grid_height; ++i){
@@ -197,6 +206,7 @@ void game::check_turn()
 	AI_turn();
 }
 
+//checks for best individual moves to make, specifically advantageous or stalemating moves
 void game::AI_turn()
 {
 	bool advantage;
@@ -328,7 +338,8 @@ void game::AI_turn()
 				}
 			}
 		}
-	}while(advantage);
+	}while(advantage);//exits loop when AI decides no more moves should be made
+	//returns all units to moveable states
 	for (int i = 0; i < grid_width*grid_height; ++i){
 		if(unit_list[i]){
 			unit_list[i]->set_status(1);
@@ -336,9 +347,10 @@ void game::AI_turn()
 	}
 }
 
+//action tree for selections
 void game::select(int index)
 {
-	if (!show_paths){
+	if (!show_paths){//shows movement options
 		if (unit_list[index]){
 			if(unit_list[index]->get_team()==0 && unit_list[index]->get_status()){
 				selected_index = index;
@@ -347,7 +359,7 @@ void game::select(int index)
 			}
 		}
 	}
-	else if (!show_targets){
+	else if (!show_targets){//shows targets
 		if (pathing[index]>0){
 			move_index = index;
 			clear_pathing();
@@ -357,7 +369,7 @@ void game::select(int index)
 			show_targets = true;
 		}
 	}
-	else{
+	else{//attacks target and exhausts the unit's turn
 		if (pathing[index]>0){
 			int target_index = index;
 			clear_pathing();
@@ -384,6 +396,7 @@ void game::select(int index)
 	}
 }
 
+//reverse order of select
 void game::back()
 {
 	if (show_targets){

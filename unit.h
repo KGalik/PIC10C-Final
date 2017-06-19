@@ -15,13 +15,14 @@ class unit : public QWidget, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 public:
-	unit(int,int,std::string,int,int,int,int,int,int);
+	unit(int, int, std::string, int, int);
 	unit(const unit&);
 	//accessors
-	int get_hp();
-	int get_sta();
-	int get_att();
-	int get_def();
+	//old stats
+	//int get_hp();
+	//int get_sta();
+	//int get_att();
+	//int get_def();
 	int get_move();
 	int get_type();
 	int get_team();
